@@ -44,19 +44,15 @@ def create_holidays_events(employees, policy):
     result = []
     holidays = fetch_ical(holiday_urls[policy])
     employees = filter_by_policy(employees, policy)
-    min_date = arrow.now().shift(days=-100)
-    max_date = arrow.now().shift(days=365)
+    min_date = arrow.now().shift(days=-30)
+    max_date = arrow.now().shift(days=100)
     for employee in employees:
         for holiday in holidays.events:
-            if holiday.begin > min_date and holiday.begin < max_date:
-                event = Event()
-                event.name = employee
-                event.begin = holiday.begin
-                event.end = holiday.end
+            if holiday.begin > min_date and holiday.begin < max_date and not holiday.description.startswith('Observance'):
+                event = holiday.clone()
+                event.name = employee + ' - ' + event.name
                 event.uid = employee.lower() + '_' + holiday.uid
-                event.created = holiday.created
-                event.last_modified = holiday.last_modified
-                event.description = holiday.description
+
                 result.append(event)
     return result
 
