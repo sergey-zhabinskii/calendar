@@ -15,7 +15,7 @@ def filter_ical_events(ical_data, keywords):
     filtered_events = []
     events = re.findall(r'BEGIN:VEVENT(.*?)END:VEVENT', ical_data, re.DOTALL)
     for event in events:
-        for keyword in keywoards:
+        for keyword in keywords:
             if keyword.lower() in event.lower():
                 filtered_events.append(event)
     return filtered_events
