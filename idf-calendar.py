@@ -45,8 +45,13 @@ def create_holidays_events(employees, policy):
     employees = filter_by_policy(employees, 'PL')
     for employee in employees:
         for holiday in holidays.events:
-            event = holiday.clone()
+            event = Event()
             event.name = employee
+            event.begin = holiday.begin
+            event.end = holiday.end
+            event.uid = employee.lower() + '_' + holiday.uid
+            event.created = holiday.created
+            event.last_modified = holiday.last_modified
             result.append(event)
     return result
 
