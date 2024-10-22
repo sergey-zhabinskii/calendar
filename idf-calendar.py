@@ -43,7 +43,7 @@ def filter_by_policy(employees, policy):
 def create_holidays_events(employees, policy):
     result = []
     holidays = fetch_ical(holiday_urls[policy])
-    employees = filter_by_policy(employees, 'PL')
+    employees = filter_by_policy(employees, policy)
     min_date = arrow.now().shift(days=-100)
     max_date = arrow.now().shift(days=365)
     for employee in employees:
