@@ -1,4 +1,5 @@
 import requests
+import arrow
 from ics import Calendar, Event
 import re
 
@@ -43,16 +44,20 @@ def create_holidays_events(employees, policy):
     result = []
     holidays = fetch_ical(holiday_urls[policy])
     employees = filter_by_policy(employees, 'PL')
+    min_date = arrow.now().shift(days=-100)
+    max_date = arrow.now().shift(days=365)
     for employee in employees:
         for holiday in holidays.events:
-            event = Event()
-            event.name = employee
-            event.begin = holiday.begin
-            event.end = holiday.end
-            event.uid = employee.lower() + '_' + holiday.uid
-            event.created = holiday.created
-            event.last_modified = holiday.last_modified
-            result.append(event)
+            if holiday.begin > min_date and holiday.begin < max_date:
+                event = Event()
+                event.name = employee
+                event.begin = holiday.begin
+                event.end = holiday.end
+                event.uid = employee.lower() + '_' + holiday.uid
+                event.created = holiday.created
+                event.last_modified = holiday.last_modified
+                event.description = holiday.description
+                result.append(event)
     return result
 
 if __name__ == "__main__":
