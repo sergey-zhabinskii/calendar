@@ -3,7 +3,7 @@ import arrow
 from ics import Calendar, Event
 import re
 
-ical_url = 'https://idfeulatam2.bamboohr.com/feeds/feed.php?id=629d07619116cbc01491f8a34191e683'
+ical_url = 'https://idfeulatam2.bamboohr.com/feeds/feed.php?id=78b77031c7bc34977768e141ee457228'
 holiday_urls = {
         'BY': 'https://calendar.google.com/calendar/ical/en.by%23holiday%40group.v.calendar.google.com/public/basic.ics',
         'PL': 'https://calendar.google.com/calendar/ical/en.polish%23holiday%40group.v.calendar.google.com/public/basic.ics',
